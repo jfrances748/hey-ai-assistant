@@ -7,7 +7,6 @@ h11==0.16.0
 idna==3.10
 numpy==2.2.5
 pvporcupine==3.0.5
-PyAudio==0.2.14
 pycparser==2.22
 pydantic==2.11.4
 pydantic_core==2.33.2
