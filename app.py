@@ -7,10 +7,10 @@ import time
 app = FastAPI()
 
 # Initialize Porcupine
-access_key = "3GywELRobEB2GNbtb8ReMKZTlNHt2bnGdQr0St4OQLeGhamQ18gkUQ=="
+access_key = "8+8UgimaYCMHvycSUUkHUgNdmGFxKrIABzuCWwpDd2fVt69ewUEDCw=="
 porcupine = pvporcupine.create(
     access_key=access_key,
-    keyword_paths=["Hey_AI_mac.ppn"],
+    keyword_paths=["Hey-Jamie_en_linux_v3_0_0.ppn"],
     sensitivities=[0.5]
 )
 
@@ -32,7 +32,7 @@ async def websocket_endpoint(websocket: WebSocket):
                 if result >= 0:
                     detection_time = time.ctime()
                     print(f"Detected 'Hey AI' at {detection_time}")
-                    await websocket.send_text("Hey AI detected")
+                    await websocket.send_text("Hey Jaime detected")
                     with open("detections.log", "a") as log:
                         log.write(f"Detected 'Hey AI' at {detection_time}\n")
             else:
