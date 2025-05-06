@@ -16,7 +16,7 @@ porcupine = pvporcupine.create(
 
 @app.get("/")
 async def root():
-    return {"message": "Hey AI Server is running"}
+    return {"message": "Hey Jamie Server is running"}
 
 @app.websocket("/ws")
 async def websocket_endpoint(websocket: WebSocket):
