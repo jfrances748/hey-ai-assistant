@@ -18,7 +18,7 @@ logger = logging.getLogger(__name__)
 app = FastAPI()
 
 # Load Porcupine Access Key from environment variable
-access_key = os.getenv("8+8UgimaYCMHvycSUUkHUgNdmGFxKrIABzuCWwpDd2fVt69ewUEDCw==")
+access_key = os.getenv("PORCUPINE_ACCESS_KEY")
 if not access_key:
     logger.error("PORCUPINE_ACCESS_KEY environment variable not set.")
     raise ValueError("PORCUPINE_ACCESS_KEY environment variable not set.")
@@ -41,7 +41,7 @@ async def send_control_message(control_url: str, action: str):
     try:
         payload = {"action": action}
         headers = {
-            "Authorization": "2adc4682-66f6-47d4-9c9f-aad24a73650b",  # Replace with your Vapi API key
+            "Authorization": "Bearer 2adc4682-66f6-47d4-9c9f-aad24a73650b",  # Replace with your Vapi API key
             "Content-Type": "application/json"
         }
         response = requests.post(control_url, json=payload, headers=headers)
@@ -54,7 +54,7 @@ async def process_audio_stream(call_id: str, websocket_url: str, control_url: st
     """Connect to Vapi's WebSocket to receive audio and process it with Porcupine."""
     try:
         headers = {
-            "Authorization": "2adc4682-66f6-47d4-9c9f-aad24a73650b"  # Replace with your Vapi API key
+            "Authorization": "Bearer 2adc4682-66f6-47d4-9c9f-aad24a73650b"  # Replace with your Vapi API key
         }
         logger.info(f"Attempting to connect to WebSocket for call {call_id}: {websocket_url}")
         async with websockets.connect(websocket_url, extra_headers=headers) as websocket:
