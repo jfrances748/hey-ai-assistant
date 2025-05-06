@@ -16,7 +16,7 @@ logger = logging.getLogger(__name__)
 app = FastAPI()
 
 porcupine = pvporcupine.create(
-    access_key="8+8UgimaYCMHvycSUUkHUgNdmGFxKrIABzuCWwpDd2fVt69ewUEDCw==",
+    access_key="8+8UgimaYCMHvycSUUkHUgNdmGFxKrIABzuCWwpDd2fVt69ewUEDCw==Y",
     keyword_paths=["Hey-Jamie_en_linux_v3_0_0.ppn"],
     sensitivities=[0.5]
 )
@@ -29,7 +29,7 @@ async def process_audio_stream(call_id: str, websocket_url: str):
     try:
         # Add headers if Vapi requires authentication (replace with your API key)
         headers = {
-            "Authorization": "2adc4682-66f6-47d4-9c9f-aad24a73650b"  # 
+            "Authorization": "2adc4682-66f6-47d4-9c9f-aad24a73650b"  #
         }
         logger.info(f"Attempting to connect to WebSocket for call {call_id}: {websocket_url}")
         async with websockets.connect(websocket_url, extra_headers=headers) as websocket:
@@ -70,13 +70,22 @@ async def handle_vapi_events(request: Request):
         event = await request.json()
         logger.info(f"Received event payload: {event}")
 
-        message = event.get("message", {})
-        message_type = message.get("type")
-        call_id = event.get("call", {}).get("id")
+        # Extract call_id with more robust checks and logging
+        call_id = None
+        if "call" in event and isinstance(event["call"], dict):
+            call_id = event["call"].get("id")
+        else:
+            logger.error(f"Event structure missing 'call' key or not a dict: {event}")
+            return JSONResponse(content={"status": "error", "message": "No call ID found"})
 
         if not call_id:
-            logger.error("No call ID found in event")
+            logger.error(f"No call ID found in event: {event}")
             return JSONResponse(content={"status": "error", "message": "No call ID found"})
+
+        logger.info(f"Processing event for call ID: {call_id}")
+
+        message = event.get("message", {})
+        message_type = message.get("type")
 
         if message_type == "speech-update" and message.get("status") == "started" and message.get("role") == "user":
             # Check if this call already has an active WebSocket connection
