@@ -16,7 +16,7 @@ logger = logging.getLogger(__name__)
 app = FastAPI()
 
 porcupine = pvporcupine.create(
-    access_key="8+8UgimaYCMHvycSUUkHUgNdmGFxKrIABzuCWwpDd2fVt69ewUEDCw==Y",
+    access_key="8+8UgimaYCMHvycSUUkHUgNdmGFxKrIABzuCWwpDd2fVt69ewUEDCw==",
     keyword_paths=["Hey-Jamie_en_linux_v3_0_0.ppn"],
     sensitivities=[0.5]
 )
